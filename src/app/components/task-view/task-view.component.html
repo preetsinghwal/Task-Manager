@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+    <span>Task Details</span>
+</mat-toolbar>
+
+<div class="container" *ngIf="task">
+    <mat-card>
+        <mat-card-title>
+            <span>{{task.name}}</span>
+            <mat-slide-toggle [checked]="task.completed" disabled></mat-slide-toggle>
+        </mat-card-title>
+        <mat-card-content>
+            <p>Due Date: {{task.dueDate}}</p>
+            <p>Priority: {{task.priority}}</p>
+            <p>Notes: {{task.notes}}</p>
+            <!-- <p *ngIf="task && task.tags">Tags: {{task.tags.join(',')}}</p> -->
+        </mat-card-content>
+    </mat-card>
+    <button mat-button color="primary" routerLink="/">Back</button>
+</div>

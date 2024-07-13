@@ -1,0 +1,53 @@
+<mat-toolbar color="primary">
+    <span>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</span>
+</mat-toolbar>
+
+<div class="container">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Task Name</mat-label>
+            <input matInput formControlName="name"/>
+            <mat-error *ngIf="taskForm.controls['name'].hasError('required')">
+                Task Name is required
+            </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill"> -->
+            <mat-label>Due Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate"/>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="taskForm.controls['dueDate'].hasError('required')">
+                Due Date is required
+            </mat-error>
+        <!-- </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority" matNativeControl>
+                <mat-option value="High">High</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="Low">Low</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tags</mat-label>
+            <input matInput formControlName="tags"/>
+        </mat-form-field>
+
+        <!-- <mat-form-field> -->
+            <mat-slide-toggle formControlName="completed">Completed</mat-slide-toggle>
+        <!-- </mat-form-field> -->
+
+        <div class="button-container">
+            <button mat-button color="primary" type="submit">{{ isEditMode ? 'Update Task' : 'Add Task' }}</button>
+            <button mat-button color="warn" routerLink="/">Cancel</button>
+        </div>
+    </form>
+</div>
