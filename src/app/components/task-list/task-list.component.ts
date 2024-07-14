@@ -10,11 +10,13 @@ import { RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounce, debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [MatToolbar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, CommonModule, MatCardActions, RouterModule, MatInputModule, ReactiveFormsModule],
+  imports: [MatToolbar, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, CommonModule, MatCardActions, RouterModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatSlideToggle],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
@@ -22,28 +24,35 @@ export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   searchControl = new FormControl('');
+  showCompletedControl = new FormControl(false);
 
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    // this.taskService.tasks.subscribe(tasks => this.tasks = tasks)
-    this.loadTasks();
+    this.taskService.tasks.subscribe(tasks => {
+      this.tasks = tasks
+      this.filterTasks();
+    })
+  
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged()
-    ).subscribe(() => this.filterTasks());
+    ).subscribe((value) => {
+      console.log('search term', value)
+      this.filterTasks()
+    });
 
+    this.showCompletedControl.valueChanges.subscribe(() => this.filterTasks());
   }
 
-  loadTasks(): void {
-    this.tasks = this.taskService.getTasks();
-    this.filterTasks();
-  }
-
-  filterTasks() {
-    const filter = {
-      searchTerm: this.searchControl.value || '',
-    }
+  filterTasks(): void {
+    const searchTerm = this.searchControl.value?.toLowerCase() || '';
+    const showCompleted = this.showCompletedControl.value;
+    this.filteredTasks = this.tasks.filter(task => {
+      const matchesSearch = task.name.toLowerCase().includes(searchTerm);
+      const matchesCompletion = !showCompleted || task.completed;
+      return matchesSearch && matchesCompletion;
+    });
   }
 
   markAsCompleted(task: Task): void {

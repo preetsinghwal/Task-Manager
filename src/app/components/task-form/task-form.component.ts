@@ -13,11 +13,12 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [MatToolbarModule, ReactiveFormsModule, MatLabel, MatError, MatDatepicker, MatDatepickerModule, MatSelectModule, MatOptionModule, MatNativeDateModule, CommonModule, MatSlideToggleModule, MatInputModule, MatSelectModule, MatSlideToggleModule, MatFormFieldModule],
+  imports: [MatToolbarModule, ReactiveFormsModule, MatLabel, MatError, MatDatepicker, MatDatepickerModule, MatSelectModule, MatOptionModule, MatNativeDateModule, CommonModule, MatSlideToggleModule, MatInputModule, MatSelectModule, MatSlideToggleModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss',
   providers: [

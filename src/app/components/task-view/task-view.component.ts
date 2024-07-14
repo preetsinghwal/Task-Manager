@@ -6,11 +6,12 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-task-view',
   standalone: true,
-  imports: [MatToolbar, MatCard, MatCardTitle, MatCardContent, MatSlideToggle, CommonModule],
+  imports: [MatToolbar, MatCard, MatCardTitle, MatCardContent, MatSlideToggle, CommonModule, MatButtonModule],
   templateUrl: './task-view.component.html',
   styleUrl: './task-view.component.scss'
 })
@@ -33,5 +34,9 @@ export class TaskViewComponent implements OnInit{
     if(!this.task) {
       this.router.navigate(['/']);
     }
+  }
+
+  goToBack(): void {
+    this.router.navigate(['/']);
   }
 }

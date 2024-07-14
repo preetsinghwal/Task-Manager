@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="title">
     <span>{{ isEditMode ? 'Edit Task' : 'Add Task' }}</span>
 </mat-toolbar>
 
@@ -12,15 +12,16 @@
             </mat-error>
         </mat-form-field>
 
-        <!-- <mat-form-field appearance="fill"> -->
-            <mat-label>Due Date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dueDate"/>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="taskForm.controls['dueDate'].hasError('required')">
                 Due Date is required
             </mat-error>
-        <!-- </mat-form-field> -->
+        </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Priority</mat-label>
@@ -46,7 +47,7 @@
         <!-- </mat-form-field> -->
 
         <div class="button-container">
-            <button mat-button color="primary" type="submit">{{ isEditMode ? 'Update Task' : 'Add Task' }}</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="taskForm.invalid">{{ isEditMode ? 'Update Task' : 'Add Task' }}</button>
             <button mat-button color="warn" routerLink="/">Cancel</button>
         </div>
     </form>
